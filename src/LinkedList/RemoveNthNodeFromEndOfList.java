@@ -4,7 +4,6 @@ public class RemoveNthNodeFromEndOfList {
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
         //令p指向头节点
-        //p移动n步到r
         ListNode p = head;
         ListNode r = p;
         int k = n;
