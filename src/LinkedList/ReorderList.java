@@ -20,7 +20,7 @@ public class ReorderList {
             if (i != (link.size() / 2 - 1)) {
                 link.get(link.size() - 1 - i).next = link.get(i + 1);
             } else {
-                if (link.size() %2 == 0) {
+                if (link.size() % 2 == 0) {
                     link.get(link.size() - 1 - i).next = null;
                 } else {
                     link.get(link.size() - 1 - i).next = link.get(link.size() / 2);
