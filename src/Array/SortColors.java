@@ -5,18 +5,14 @@ public class SortColors {
     public void sortColors(int[] nums) {
         int red = 0;
         int white = 0;
-        int blue = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
+        for (int num : nums) {
+            if (num == 0) {
                 red++;
-            } else if (nums[i] == 1) {
+            } else if (num == 1) {
                 white++;
-            } else {
-                blue++;
             }
         }
         white += red;
-        blue += white;
         for (int i = 0; i < nums.length; i++) {
             if (i < red) {
                 nums[i] = 0;
