@@ -10,33 +10,22 @@ public class SummaryRanges {
         if (nums.length == 0) {
             return ans;
         }
-        String str = String.valueOf(nums[0]);
-        int p = 0;
-        while (p < nums.length) {
-            if (p + 1 < nums.length && nums[p + 1] - nums[p] != 1) {
-                if (p == 0) {
-                    ans.add(String.valueOf(nums[0]));
-                } else {
-                    if (String.valueOf(nums[p]).equals(str)) {
-                        ans.add(str);
-                    } else {
-                        ans.add(str.concat("->" + nums[p]));
-                    }
-                }
-                str = String.valueOf(nums[p + 1]);
+        int offset = nums[0];
+        int start = nums[0];
+        int end;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != i + offset) {
+                offset = nums[i] - i;
+                end = nums[i - 1];
+                if (start != end) ans.add(start + "->" + end);
+                else ans.add(String.valueOf(start));
+                start = nums[i];
             }
-            p++;
         }
-        if (str.equals(String.valueOf(nums[nums.length - 1]))) {
-            ans.add(str);
-        } else if (str.equals(String.valueOf(nums[0]))) {
-            if (ans.size() == 1) {
-                ans.add(String.valueOf(nums[0]));
-            } else {
-                ans.add(nums[0] + "->" + nums[nums.length - 1]);
-            }
+        if (start != nums[nums.length - 1]) {
+            ans.add(start + "->" + nums[nums.length - 1]);
         } else {
-            ans.add(str + "->" + nums[nums.length - 1]);
+            ans.add(String.valueOf(start));
         }
         return ans;
     }
