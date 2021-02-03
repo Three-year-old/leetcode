@@ -1,7 +1,5 @@
 package Array;
 
-import java.util.Arrays;
-
 public class FirstMissingPositive {
 
     public int firstMissingPositive(int[] nums) {
