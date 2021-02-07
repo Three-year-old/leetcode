@@ -6,19 +6,19 @@ public class PartitionEqualSubsetSum {
         if (nums == null || nums.length == 0) {
             return true;
         }
-        int volumn = 0;
+        int volume = 0;
         for (int num : nums) {
-            volumn += num;
+            volume += num;
         }
-        if (volumn % 2 != 0) return false;
-        volumn /= 2;
-        boolean[] dp = new boolean[volumn + 1];
+        if (volume % 2 != 0) return false;
+        volume /= 2;
+        boolean[] dp = new boolean[volume + 1];
         dp[0] = true;
         for (int i = 1; i < nums.length; i++) {
-            for (int j = volumn; j >= nums[i - 1]; j--) {
+            for (int j = volume; j >= nums[i - 1]; j--) {
                 dp[j] = dp[j] || dp[j - nums[i - 1]];
             }
         }
-        return dp[volumn];
+        return dp[volume];
     }
 }
