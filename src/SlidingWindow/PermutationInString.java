@@ -1,38 +1,27 @@
 package SlidingWindow;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PermutationInString {
 
     public boolean checkInclusion(String s1, String s2) {
         int window = s1.length();
         if (window > s2.length()) return false;
-        Map<Character, Integer> map1 = new HashMap<>();
+        int[] map1 = new int[26];
         for (int i = 0; i < s1.length(); i++) {
-            map1.put(s1.charAt(i), map1.getOrDefault(s1.charAt(i), 0) + 1);
+            map1[s1.charAt(i) - 'a']++;
         }
-        Map<Character, Integer> map2 = new HashMap<>();
+        int[] map2 = new int[26];
         int start = 0;
         for (int i = start; i < start + window; i++) {
-            map2.put(s2.charAt(i), map2.getOrDefault(s2.charAt(i), 0) + 1);
+            map2[s2.charAt(i) - 'a']++;
         }
         while (start <= s2.length() - window) {
             boolean flag = true;
             if (start != 0) {
-                if (map2.get(s2.charAt(start - 1)) == 1) {
-                    map2.remove(s2.charAt(start - 1));
-                } else {
-                    map2.put(s2.charAt(start - 1), map2.get(s2.charAt(start - 1)) - 1);
-                }
-                map2.put(s2.charAt(start + window - 1), map2.getOrDefault(s2.charAt(start + window - 1), 0) + 1);
+                map2[s2.charAt(start - 1) - 'a']--;
+                map2[s2.charAt(start + window - 1) - 'a']++;
             }
-            for (Map.Entry<Character, Integer> entry : map1.entrySet()) {
-                if (!map2.containsKey(entry.getKey())) {
-                    flag = false;
-                    break;
-                }
-                if (!map2.get(entry.getKey()).equals(entry.getValue())) {
+            for (int i = 0; i < map1.length; i++) {
+                if (map1[i] != map2[i]) {
                     flag = false;
                     break;
                 }
