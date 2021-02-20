@@ -1,49 +1,32 @@
 package Array;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 public class DegreeOfAnArray {
 
     public int findShortestSubArray(int[] nums) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (map.containsKey(nums[i])) {
-                map.get(nums[i]).set(0, map.get(nums[i]).get(0) + 1);
-                if (map.get(nums[i]).size() == 2) {
-                    map.get(nums[i]).add(i);
-                } else {
-                    map.get(nums[i]).set(2, i);
-                }
-            } else {
-                List<Integer> list = new LinkedList<>();
-                list.add(1);
-                list.add(i);
-                map.put(nums[i], list);
-            }
-        }
         int max = 0;
-        for (Integer key : map.keySet()) {
-            max = Math.max(map.get(key).get(0), max);
+        for (int i : nums)
+            max = Math.max(max, i);
+        int[] count = new int[max + 1];
+        int[] left = new int[max + 1];
+        int[] right = new int[max + 1];
+        for (int i = 0; i < nums.length; i++) {
+            if (count[nums[i]] == 0)
+                left[nums[i]] = i;
+            right[nums[i]] = i;
+            count[nums[i]]++;
         }
-        int res = Integer.MAX_VALUE;
-        for (Integer key : map.keySet()) {
-            if (map.get(key).get(0) == max) {
-                if (map.get(key).size() == 3) {
-                    res = Math.min(res, map.get(key).get(2) - map.get(key).get(1));
-                } else {
-                    return 1;
-                }
+        int degree = 0;
+        int min = Integer.MAX_VALUE;
+        for (int j : count) {
+            if (j >= degree) {
+                degree = j;
             }
         }
-        return res + 1;
-    }
-
-    public static void main(String[] args) {
-        int[] test = {1, 2, 2, 3, 1};
-        DegreeOfAnArray d = new DegreeOfAnArray();
-        System.out.println(d.findShortestSubArray(test));
+        for (int x = 0; x < count.length; x++) {
+            if (count[x] == degree) {
+                min = Math.min(min, right[x] - left[x] + 1);
+            }
+        }
+        return min;
     }
 }
