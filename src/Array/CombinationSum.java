@@ -5,24 +5,23 @@ import java.util.List;
 
 public class CombinationSum {
 
+    private final List<List<Integer>> res = new ArrayList<>();
+
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        dfs(res, list, candidates, target, 0);
+        dfs(candidates, target, 0, list);
         return res;
     }
 
-    private void dfs(List<List<Integer>> res, List<Integer> list, int[] candidates, int target, int start) {
-        if (target < 0) {
+    private void dfs(int[] candidates, int target, int position, List<Integer> path) {
+        if (target <= 0) {
+            if (target == 0) res.add(new ArrayList<>(path));
             return;
-        } else if (target == 0) {
-            res.add(new ArrayList<>(list));
-        } else {
-            for (int i = start; i < candidates.length; i++) {
-                list.add(candidates[i]);
-                dfs(res, list, candidates, target - candidates[i], i);
-                list.remove(list.size() - 1);
-            }
+        }
+        for (int i = position; i < candidates.length; i++) {
+            path.add(candidates[i]);
+            dfs(candidates, target - candidates[i], i, path);
+            path.remove(path.size() - 1);
         }
     }
 }
