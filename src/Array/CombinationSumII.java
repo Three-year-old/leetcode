@@ -2,32 +2,30 @@ package Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CombinationSumII {
 
+    private final List<List<Integer>> res = new ArrayList<>();
+
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        Arrays.sort(candidates);
-        List<List<Integer>> res = new ArrayList<>();
+        // 1 1 2 5 6 7 10
         List<Integer> list = new ArrayList<>();
-        dfs(res, list, candidates, target, 0);
+        Arrays.sort(candidates);
+        dfs(candidates, target, 0, list);
         return res;
     }
 
-    private void dfs(List<List<Integer>> res, List<Integer> list, int[] candidates, int target, int start) {
-        if (target < 0) {
+    private void dfs(int[] candidates, int target, int position, List<Integer> path) {
+        if (target <= 0) {
+            if (target == 0) res.add(new ArrayList<>(path));
             return;
-        } else if (target == 0) {
-            Collections.sort(list);
-            if (!res.contains(list))
-                res.add(new ArrayList<>(list));
-        } else {
-            for (int i = start; i < candidates.length; i++) {
-                list.add(candidates[i]);
-                dfs(res, list, candidates, target - candidates[i], i + 1);
-                list.remove(list.size() - 1);
-            }
+        }
+        for (int i = position; i < candidates.length; i++) {
+            if (i > position && candidates[i] == candidates[i - 1]) continue;
+            path.add(candidates[i]);
+            dfs(candidates, target - candidates[i], i + 1, path);
+            path.remove(path.size() - 1);
         }
     }
 }
