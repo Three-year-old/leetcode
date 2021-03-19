@@ -5,21 +5,16 @@ import java.util.List;
 
 public class Subsets {
 
-    private final List<List<Integer>> res = new ArrayList<>();
-
     public List<List<Integer>> subsets(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-            dfs(nums, i, new ArrayList<>());
+        List<List<Integer>> res = new ArrayList<>();
+        int n = nums.length;
+        for (int i = 0; i < (1 << n); i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < n; j++) {
+                if ((i & (1 << j)) != 0) list.add(nums[j]);
+            }
+            res.add(list);
         }
-        res.add(new ArrayList<>());
         return res;
-    }
-
-    private void dfs(int[] nums, int start, List<Integer> list) {
-        list.add(nums[start]);
-        res.add(list);
-        for (int i = start + 1; i < nums.length; i++) {
-            dfs(nums, i, new ArrayList<>(list));
-        }
     }
 }
