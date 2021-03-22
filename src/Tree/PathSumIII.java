@@ -1,29 +1,26 @@
 package Tree;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PathSumIII {
 
     private int count = 0;
 
     public int pathSum(TreeNode root, int sum) {
-        if (root == null) return 0;
-        dfs(root, sum, 0);
-        fuck(root.left, root.right, sum);
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        dfs(root, 0, map, sum);
         return count;
     }
 
-    private void fuck(TreeNode left, TreeNode right, int sum) {
-        dfs(left, sum, 0);
-        dfs(right, sum, 0);
-        if (left != null) fuck(left.left, left.right, sum);
-        if (right != null) fuck(right.left, right.right, sum);
-    }
-
-    private void dfs(TreeNode root, int sum, int path) {
-        if (root == null) return;
-        path += root.val;
-        if (path == sum) count++;
-        int copy = path;
-        dfs(root.left, sum, path);
-        dfs(root.right, sum, copy);
+    private void dfs(TreeNode node, int pre, Map<Integer, Integer> map, int target) {
+        if (node == null) return;
+        pre += node.val;
+        if (map.containsKey(pre - target)) count += map.get(pre - target);
+        map.put(pre, map.getOrDefault(pre, 0) + 1);
+        dfs(node.left, pre, map, target);
+        dfs(node.right, pre, map, target);
+        map.put(pre, map.getOrDefault(pre, 0) - 1);
     }
 }
