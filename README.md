@@ -1,11 +1,17 @@
 # README
-> Problem Solved: 267
+> Problem Solved: 329
 
 ## Easy 
-![](https://progress-bar.dev/29)
+>148/595
+
+![](https://progress-bar.dev/25)
 
 ## Medium
-![](https://progress-bar.dev/11)
+>188/1118
+> 
+![](https://progress-bar.dev/17)
 
 ## Hard
+>25/448
+> 
 ![](https://progress-bar.dev/3)
